@@ -8,25 +8,51 @@
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
-    <!-- External CSS -->
-    <link rel="stylesheet" href="style/style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+        
+        /* Custom popup styling */
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
+        }
+        
+        .leaflet-popup-content {
+            margin: 15px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .workshop-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .workshop-info {
+            color: #34495e;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        
+        .contact-info {
+            background-color: #f8f9fa;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Hong Kong Workshop Locations</h1>
-            <p>Find creative workshops across Hong Kong</p>
-        </header>
-        
-        <div id="map"></div>
-        
-        <div class="info-panel">
-            <h3>Workshop Information</h3>
-            <div id="workshop-details">
-                <p>Click on a marker to see workshop details</p>
-            </div>
-        </div>
-    </div>
+    <div id="map"></div>
 
     <!-- Leaflet JavaScript -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -43,84 +69,69 @@
         // Workshop locations data
         const workshopLocations = [
             {
-                name: "Central Creative Workshop",
-                latlng: [22.2820, 114.1553],
-                address: "18/F, California Tower, 30-32 D'Aguilar St, Central",
+                name: "Hygge Workshop for Tufting",
+                latlng: [22.3104316,114.1480182],
+                address: "Hoi Luen Industrial Centre, Kwun Tong",
                 type: "Art & Craft",
                 hours: "Mon-Sat: 9:00-18:00",
-                phone: "+852 1234 5678",
-                description: "Professional art supplies and workshop space",
-                website: "#"
+                phone: "+852 9040 4416",
+                description: "Tufting experience"
             },
             {
-                name: "Kowloon Tech Lab",
-                latlng: [22.3199, 114.1695],
-                address: "Shop 15, Mong Kok Computer Centre, 8 Nelson St, Mong Kok",
-                type: "Technology",
-                hours: "Tue-Sun: 10:00-20:00",
+                name: "Fox in a Box Hong Kong Escape Rooms",
+                latlng: [22.3135144,114.2177677],
+                address: "Flat 5, 9F, Eastcore, 398 Kwun Tong Rd, Kwun Tong",
+                type: "Games",
+                hours: "Sat-Sun: 10:00-20:00",
                 phone: "+852 2345 6789",
-                description: "3D printing and electronics workshops",
-                website: "#"
+                description: "Escape Game"
             },
             {
-                name: "Wan Chai Cooking Studio",
-                latlng: [22.2790, 114.1730],
-                address: "12 Hennessy Road, Wan Chai",
-                type: "Culinary",
-                hours: "Daily: 8:00-22:00",
-                phone: "+852 3456 7890",
-                description: "Professional kitchen for cooking classes",
-                website: "#"
+                name: "Tung Yao Ceramics Design Studio",
+                latlng: [22.2871092,114.1370187],
+                address: "Sai Ying Pun, Chiu Kwong St, G/F",
+                type: "Ceramic",
+                hours: "Daily: 10:30-18:00",
+                phone: "+852 6015 6044",
+                description: "Professional ceramic artistry"
             },
             {
-                name: "Causeway Bay Wood Workshop",
-                latlng: [22.2800, 114.1840],
+                name: "Hiraya Scent & Co",
+                latlng: [22.283328,114.1515669],
                 address: "25 Yee Wo Street, Causeway Bay",
                 type: "Woodworking",
                 hours: "Wed-Mon: 10:00-19:00",
                 phone: "+852 4567 8901",
-                description: "Woodworking tools and classes",
-                website: "#"
+                description: "Woodworking tools and classes"
             },
-            {
+                {
                 name: "Tsim Sha Tsui Photography Studio",
                 latlng: [22.2970, 114.1710],
                 address: "38 Salisbury Road, Tsim Sha Tsui",
                 type: "Photography",
                 hours: "Mon-Fri: 11:00-21:00, Sat-Sun: 9:00-18:00",
                 phone: "+852 5678 9012",
-                description: "Photography equipment rental and workshops",
-                website: "#"
-            },
-            {
-                name: "Sheung Wan Pottery Studio",
-                latlng: [22.2865, 114.1490],
-                address: "45 Hollywood Road, Sheung Wan",
-                type: "Art & Craft",
-                hours: "Thu-Tue: 10:00-18:00",
-                phone: "+852 6789 0123",
-                description: "Pottery classes and ceramic workshops",
-                website: "#"
+                description: "Photography equipment rental and workshops"
             }
         ];
 
         // Custom icons for different workshop types
         const iconColors = {
-            'Art & Craft': '#e74c3c',
-            'Technology': '#3498db',
-            'Culinary': '#e67e22',
-            'Woodworking': '#27ae60',
-            'Photography': '#9b59b6'
+            'Art & Craft': 'red',
+            'Technology': 'blue',
+            'Culinary': 'orange',
+            'Woodworking': 'green',
+            'Photography': 'purple'
         };
 
         // Function to create custom icons
         function createCustomIcon(workshopType) {
-            const color = iconColors[workshopType] || '#7f8c8d';
+            const color = iconColors[workshopType] || 'gray';
             return L.divIcon({
                 className: 'custom-div-icon',
-                html: `<div style="background-color: ${color}; width: 30px; height: 30px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">${workshopType.charAt(0)}</div>`,
-                iconSize: [30, 30],
-                iconAnchor: [15, 15]
+                html: `<div style="background-color: ${color}; width: 25px; height: 25px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>`,
+                iconSize: [25, 25],
+                iconAnchor: [12, 12]
             });
         }
 
@@ -145,21 +156,6 @@
             `;
             
             marker.bindPopup(popupContent);
-            
-            // Add click event to update info panel
-            marker.on('click', function() {
-                document.getElementById('workshop-details').innerHTML = `
-                    <div class="selected-workshop">
-                        <h4>${workshop.name}</h4>
-                        <p><strong>Type:</strong> ${workshop.type}</p>
-                        <p><strong>Address:</strong> ${workshop.address}</p>
-                        <p><strong>Hours:</strong> ${workshop.hours}</p>
-                        <p><strong>Phone:</strong> ${workshop.phone}</p>
-                        <p><strong>Description:</strong> ${workshop.description}</p>
-                        <a href="${workshop.website}" class="website-link">Visit Website</a>
-                    </div>
-                `;
-            });
         });
 
         // Add a legend
@@ -171,19 +167,25 @@
             
             Object.entries(iconColors).forEach(([type, color]) => {
                 div.innerHTML += `
-                    <div class="legend-item">
-                        <span class="legend-color" style="background-color: ${color}"></span>
-                        <span class="legend-text">${type}</span>
+                    <div style="margin: 5px 0;">
+                        <span style="display: inline-block; width: 15px; height: 15px; background-color: ${color}; border-radius: 50%; margin-right: 8px;"></span>
+                        ${type}
                     </div>
                 `;
             });
+            
+            // Add some styling
+            div.style.backgroundColor = 'white';
+            div.style.padding = '10px';
+            div.style.borderRadius = '5px';
+            div.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
             
             return div;
         };
 
         legend.addTo(map);
 
-        // Fit map bounds to show all markers
+        // Optional: Fit map bounds to show all markers
         const group = new L.featureGroup(workshopLocations.map(w => L.marker(w.latlng)));
         map.fitBounds(group.getBounds().pad(0.1));
 

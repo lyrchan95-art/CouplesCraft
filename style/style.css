@@ -525,7 +525,123 @@ footer {
         font-size: 1rem;
     }
 }
+/* Word Cloud Section */
+.word-cloud-section {
+    padding: 60px 0;
+    background: var(--bg-secondary);
+    text-align: center;
+}
 
+.word-cloud {
+    position: relative;
+    height: 400px;
+    max-width: 800px;
+    margin: 2rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.word {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: absolute;
+    animation: floatWord 15s ease-in-out infinite;
+}
+
+.word:hover {
+    transform: scale(1.1);
+    z-index: 10;
+}
+
+/* Word sizes and colors */
+.word-1 { font-size: 2.5rem; background: var(--primary); color: white; top: 10%; left: 10%; animation-delay: 0s; }
+.word-2 { font-size: 2rem; background: var(--slack-blue); color: white; top: 20%; right: 15%; animation-delay: 1s; }
+.word-3 { font-size: 1.8rem; background: var(--slack-green); color: white; bottom: 30%; left: 15%; animation-delay: 2s; }
+.word-4 { font-size: 1.6rem; background: var(--slack-yellow); color: var(--text-primary); top: 40%; right: 20%; animation-delay: 3s; }
+.word-5 { font-size: 1.7rem; background: var(--slack-red); color: white; bottom: 20%; right: 10%; animation-delay: 4s; }
+.word-6 { font-size: 1.5rem; background: var(--primary); color: white; top: 60%; left: 20%; animation-delay: 5s; }
+.word-7 { font-size: 1.4rem; background: var(--slack-blue); color: white; top: 15%; left: 50%; animation-delay: 6s; }
+.word-8 { font-size: 1.6rem; background: var(--slack-green); color: white; bottom: 40%; right: 25%; animation-delay: 7s; }
+.word-9 { font-size: 1.3rem; background: var(--slack-yellow); color: var(--text-primary); top: 70%; right: 15%; animation-delay: 8s; }
+.word-10 { font-size: 1.5rem; background: var(--slack-red); color: white; top: 30%; left: 30%; animation-delay: 9s; }
+.word-11 { font-size: 1.4rem; background: var(--primary); color: white; bottom: 15%; left: 40%; animation-delay: 10s; }
+.word-12 { font-size: 1.3rem; background: var(--slack-blue); color: white; top: 50%; right: 35%; animation-delay: 11s; }
+.word-13 { font-size: 1.2rem; background: var(--slack-green); color: white; bottom: 25%; left: 25%; animation-delay: 12s; }
+.word-14 { font-size: 1.6rem; background: var(--slack-yellow); color: var(--text-primary); top: 25%; right: 40%; animation-delay: 13s; }
+.word-15 { font-size: 1.3rem; background: var(--slack-red); color: white; bottom: 50%; left: 60%; animation-delay: 14s; }
+
+/* Animation */
+@keyframes floatWord {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+        transform: translate(10px, -15px) rotate(2deg);
+    }
+    50% {
+        transform: translate(-5px, 10px) rotate(-1deg);
+    }
+    75% {
+        transform: translate(8px, 5px) rotate(1deg);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .word-cloud {
+        height: 500px;
+        gap: 0.5rem;
+    }
+    
+    .word-1 { font-size: 2rem; }
+    .word-2 { font-size: 1.7rem; }
+    .word-3 { font-size: 1.5rem; }
+    .word-4 { font-size: 1.4rem; }
+    .word-5 { font-size: 1.3rem; }
+    .word-6 { font-size: 1.2rem; }
+    .word-7 { font-size: 1.1rem; }
+    .word-8 { font-size: 1.2rem; }
+    .word-9 { font-size: 1rem; }
+    .word-10 { font-size: 1.1rem; }
+    .word-11 { font-size: 1rem; }
+    .word-12 { font-size: 0.9rem; }
+    .word-13 { font-size: 0.9rem; }
+    .word-14 { font-size: 1.2rem; }
+    .word-15 { font-size: 0.9rem; }
+}
+
+@media (max-width: 480px) {
+    .word-cloud {
+        height: 600px;
+    }
+    
+    .word {
+        padding: 6px 12px;
+    }
+    
+    .word-1 { font-size: 1.5rem; }
+    .word-2 { font-size: 1.3rem; }
+    .word-3 { font-size: 1.2rem; }
+    .word-4 { font-size: 1.1rem; }
+    .word-5 { font-size: 1rem; }
+    .word-6 { font-size: 0.9rem; }
+    .word-7 { font-size: 0.9rem; }
+    .word-8 { font-size: 1rem; }
+    .word-9 { font-size: 0.8rem; }
+    .word-10 { font-size: 0.9rem; }
+    .word-11 { font-size: 0.8rem; }
+    .word-12 { font-size: 0.8rem; }
+    .word-13 { font-size: 0.8rem; }
+    .word-14 { font-size: 1rem; }
+    .word-15 { font-size: 0.8rem; }
+}
 /* Add padding to main content to account for fixed header and footer */
 main {
     padding-top: 80px;
