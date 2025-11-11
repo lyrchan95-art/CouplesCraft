@@ -3,421 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workshop Map - WorkshopWoo</title>
-    <link rel="stylesheet" href="style/style.css">
+    <title>Workshop Locations in Hong Kong</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
         #map {
-            height: 600px;
+            height: 100vh;
             width: 100%;
-            border-radius: var(--radius-lg);
         }
         
-        .map-container {
-            position: relative;
-            margin: var(--space-md) 0;
+        /* Custom popup styling */
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
         }
         
-        .map-controls {
-            position: absolute;
-            top: var(--space-md);
-            left: var(--space-md);
-            z-index: 1000;
-            background: var(--primary-white);
-            padding: var(--space-md);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-lg);
-            max-width: 300px;
+        .leaflet-popup-content {
+            margin: 15px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .workshop-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 16px;
         }
         
         .workshop-info {
-            max-height: 400px;
-            overflow-y: auto;
+            color: #34495e;
+            margin: 5px 0;
+            font-size: 14px;
         }
         
-        .workshop-item {
-            padding: var(--space-sm);
-            border-bottom: 1px solid var(--gray-200);
-            cursor: pointer;
-            transition: background-color var(--transition-fast);
-        }
-        
-        .workshop-item:hover {
-            background-color: var(--gray-50);
-        }
-        
-        .workshop-item.active {
-            background-color: var(--blue-light);
-            color: var(--primary-white);
-        }
-        
-        .filter-group {
-            margin-bottom: var(--space-sm);
-        }
-        
-        @media (max-width: 768px) {
-            #map {
-                height: 400px;
-            }
-            
-            .map-controls {
-                position: relative;
-                top: 0;
-                left: 0;
-                max-width: none;
-                margin-bottom: var(--space-sm);
-            }
+        .contact-info {
+            background-color: #f8f9fa;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 8px;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="flex items-center justify-between">
-                <a href="index.html" class="nav-brand">WorkshopWoo</a>
-                <ul class="nav-menu">
-                    <li><a href="index.html" class="nav-link">Home</a></li>
-                    <li><a href="maps.html" class="nav-link active">Map</a></li>
-                    <li><a href="#" class="nav-link">Workshops</a></li>
-                    <li><a href="#" class="nav-link">Login</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div id="map"></div>
 
-    <!-- Map Section -->
-    <section class="container">
-        <div class="p-md">
-            <h1>Find Workshops Near You</h1>
-            <p class="text-muted">Browse available workshops on the map and click pins for details</p>
-        </div>
-        
-        <div class="map-container">
-            <!-- Map Controls -->
-            <div class="map-controls">
-                <div class="filter-group">
-                    <label class="form-label">Filter by Category:</label>
-                    <select id="categoryFilter" class="form-select">
-                        <option value="all">All Categories</option>
-                        <option value="pottery">Pottery</option>
-                        <option value="cooking">Cooking</option>
-                        <option value="art">Art</option>
-                        <option value="fitness">Fitness</option>
-                        <option value="craft">Craft</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label class="form-label">Search Location:</label>
-                    <input type="text" id="locationSearch" class="form-input" placeholder="Enter location...">
-                </div>
-                
-                <button id="useLocation" class="btn btn-secondary btn-sm w-full">
-                    📍 Use My Location
-                </button>
-            </div>
-
-            <!-- Map -->
-            <div id="map"></div>
-        </div>
-
-        <!-- Workshop List -->
-        <div class="card">
-            <h3 class="card-title">Available Workshops</h3>
-            <div id="workshopList" class="workshop-info">
-                <!-- Workshop items will be populated by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=places" async defer></script>
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <script>
-        // Replace with your actual API key
-        const API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
-        
-        let map;
-        let markers = [];
-        let infoWindow;
-        let workshops = [
+        // Initialize the map centered on Hong Kong
+        const map = L.map('map').setView([22.3193, 114.1694], 12);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Workshop locations data
+        const workshopLocations = [
             {
-                id: 1,
-                name: "Pottery Paradise Studio",
-                category: "pottery",
-                address: "Central, Hong Kong",
-                lat: 22.2855,
-                lng: 114.1577,
-                price: "$480/couple",
-                participants: "6/10 spots",
-                description: "Create beautiful pottery together in our romantic studio setting."
+                name: "Central Creative Workshop",
+                latlng: [22.2820, 114.1553],
+                address: "18/F, California Tower, 30-32 D'Aguilar St, Central",
+                type: "Art & Craft",
+                hours: "Mon-Sat: 9:00-18:00",
+                phone: "+852 1234 5678",
+                description: "Professional art supplies and workshop space"
             },
             {
-                id: 2,
-                name: "Sushi Master Kitchen",
-                category: "cooking",
-                address: "Causeway Bay, Hong Kong",
-                lat: 22.2801,
-                lng: 114.1830,
-                price: "$520/couple",
-                participants: "8/10 spots",
-                description: "Learn authentic sushi making from Japanese chefs."
+                name: "Kowloon Tech Lab",
+                latlng: [22.3199, 114.1695],
+                address: "Shop 15, Mong Kok Computer Centre, 8 Nelson St, Mong Kok",
+                type: "Technology",
+                hours: "Tue-Sun: 10:00-20:00",
+                phone: "+852 2345 6789",
+                description: "3D printing and electronics workshops"
             },
             {
-                id: 3,
-                name: "Art & Wine Gallery",
-                category: "art",
-                address: "Sheung Wan, Hong Kong",
-                lat: 22.2864,
-                lng: 114.1495,
-                price: "$420/couple",
-                participants: "4/10 spots",
-                description: "Paint and sip wine in our cozy art studio."
+                name: "Wan Chai Cooking Studio",
+                latlng: [22.2790, 114.1730],
+                address: "12 Hennessy Road, Wan Chai",
+                type: "Culinary",
+                hours: "Daily: 8:00-22:00",
+                phone: "+852 3456 7890",
+                description: "Professional kitchen for cooking classes"
             },
             {
-                id: 4,
-                name: "Yoga for Couples",
-                category: "fitness",
-                address: "Wan Chai, Hong Kong",
-                lat: 22.2790,
-                lng: 114.1738,
-                price: "$380/couple",
-                participants: "5/10 spots",
-                description: "Relaxing yoga sessions designed for couples."
+                name: "Causeway Bay Wood Workshop",
+                latlng: [22.2800, 114.1840],
+                address: "25 Yee Wo Street, Causeway Bay",
+                type: "Woodworking",
+                hours: "Wed-Mon: 10:00-19:00",
+                phone: "+852 4567 8901",
+                description: "Woodworking tools and classes"
             },
             {
-                id: 5,
-                name: "Craft Beer Workshop",
-                category: "craft",
-                address: "Tsim Sha Tsui, Hong Kong",
-                lat: 22.2975,
-                lng: 114.1722,
-                price: "$450/couple",
-                participants: "7/10 spots",
-                description: "Brew your own craft beer and learn tasting techniques."
+                name: "Tsim Sha Tsui Photography Studio",
+                latlng: [22.2970, 114.1710],
+                address: "38 Salisbury Road, Tsim Sha Tsui",
+                type: "Photography",
+                hours: "Mon-Fri: 11:00-21:00, Sat-Sun: 9:00-18:00",
+                phone: "+852 5678 9012",
+                description: "Photography equipment rental and workshops"
             }
         ];
 
-        function initMap() {
-            // Default to Hong Kong center
-            const hongKong = { lat: 22.3193, lng: 114.1694 };
-            
-            map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
-                center: hongKong,
-                styles: [
-                    {
-                        featureType: 'poi',
-                        elementType: 'labels',
-                        stylers: [{ visibility: 'on' }]
-                    }
-                ]
-            });
+        // Custom icons for different workshop types
+        const iconColors = {
+            'Art & Craft': 'red',
+            'Technology': 'blue',
+            'Culinary': 'orange',
+            'Woodworking': 'green',
+            'Photography': 'purple'
+        };
 
-            infoWindow = new google.maps.InfoWindow();
-            
-            // Add workshop markers
-            addWorkshopMarkers();
-            
-            // Populate workshop list
-            populateWorkshopList();
-            
-            // Setup event listeners
-            setupEventListeners();
-        }
-
-        function addWorkshopMarkers() {
-            // Clear existing markers
-            markers.forEach(marker => marker.setMap(null));
-            markers = [];
-
-            workshops.forEach(workshop => {
-                const marker = new google.maps.Marker({
-                    position: { lat: workshop.lat, lng: workshop.lng },
-                    map: map,
-                    title: workshop.name,
-                    icon: getMarkerIcon(workshop.category)
-                });
-
-                marker.addListener('click', () => {
-                    showWorkshopInfo(workshop, marker);
-                });
-
-                markers.push(marker);
+        // Function to create custom icons
+        function createCustomIcon(workshopType) {
+            const color = iconColors[workshopType] || 'gray';
+            return L.divIcon({
+                className: 'custom-div-icon',
+                html: `<div style="background-color: ${color}; width: 25px; height: 25px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>`,
+                iconSize: [25, 25],
+                iconAnchor: [12, 12]
             });
         }
 
-        function getMarkerIcon(category) {
-            const icons = {
-                pottery: '🎨',
-                cooking: '👨‍🍳',
-                art: '🖌️',
-                fitness: '💪',
-                craft: '🔨'
-            };
+        // Add markers for each workshop location
+        workshopLocations.forEach(workshop => {
+            const marker = L.marker(workshop.latlng, {
+                icon: createCustomIcon(workshop.type)
+            }).addTo(map);
             
-            // You can replace these with actual icon URLs
-            return null; // Using default marker for now
-        }
-
-        function showWorkshopInfo(workshop, marker) {
-            const content = `
-                <div class="workshop-info-window">
-                    <h3>${workshop.name}</h3>
-                    <p><strong>Category:</strong> ${workshop.category}</p>
-                    <p><strong>Price:</strong> ${workshop.price}</p>
-                    <p><strong>Participants:</strong> ${workshop.participants}</p>
-                    <p>${workshop.description}</p>
-                    <div class="flex gap-sm mt-sm">
-                        <button onclick="joinWorkshop(${workshop.id})" class="btn btn-primary btn-sm">Join Workshop</button>
-                        <button onclick="shareWorkshop(${workshop.id})" class="btn btn-secondary btn-sm">Share</button>
+            // Create popup content
+            const popupContent = `
+                <div class="workshop-popup">
+                    <div class="workshop-title">${workshop.name}</div>
+                    <div class="workshop-info"><strong>Type:</strong> ${workshop.type}</div>
+                    <div class="workshop-info"><strong>Address:</strong> ${workshop.address}</div>
+                    <div class="workshop-info"><strong>Hours:</strong> ${workshop.hours}</div>
+                    <div class="contact-info">
+                        <strong>Contact:</strong> ${workshop.phone}<br>
+                        ${workshop.description}
                     </div>
                 </div>
             `;
-
-            infoWindow.setContent(content);
-            infoWindow.open(map, marker);
             
-            // Highlight in list
-            highlightWorkshopInList(workshop.id);
-        }
+            marker.bindPopup(popupContent);
+        });
 
-        function populateWorkshopList(filterCategory = 'all') {
-            const workshopList = document.getElementById('workshopList');
-            workshopList.innerHTML = '';
+        // Add a legend
+        const legend = L.control({ position: 'bottomright' });
 
-            const filteredWorkshops = workshops.filter(workshop => 
-                filterCategory === 'all' || workshop.category === filterCategory
-            );
-
-            filteredWorkshops.forEach(workshop => {
-                const workshopItem = document.createElement('div');
-                workshopItem.className = 'workshop-item';
-                workshopItem.innerHTML = `
-                    <h4>${workshop.name}</h4>
-                    <p class="text-sm text-muted">${workshop.address}</p>
-                    <div class="flex items-center justify-between">
-                        <span class="badge badge-primary">${workshop.category}</span>
-                        <span class="text-sm">${workshop.price}</span>
+        legend.onAdd = function(map) {
+            const div = L.DomUtil.create('div', 'legend');
+            div.innerHTML = '<h4>Workshop Types</h4>';
+            
+            Object.entries(iconColors).forEach(([type, color]) => {
+                div.innerHTML += `
+                    <div style="margin: 5px 0;">
+                        <span style="display: inline-block; width: 15px; height: 15px; background-color: ${color}; border-radius: 50%; margin-right: 8px;"></span>
+                        ${type}
                     </div>
                 `;
-                
-                workshopItem.addEventListener('click', () => {
-                    const marker = markers.find(m => 
-                        m.getPosition().lat() === workshop.lat && 
-                        m.getPosition().lng() === workshop.lng
-                    );
-                    if (marker) {
-                        showWorkshopInfo(workshop, marker);
-                        map.panTo(marker.getPosition());
-                        map.setZoom(15);
-                    }
-                });
-
-                workshopList.appendChild(workshopItem);
-            });
-        }
-
-        function highlightWorkshopInList(workshopId) {
-            document.querySelectorAll('.workshop-item').forEach(item => {
-                item.classList.remove('active');
             });
             
-            // You might want to add data attributes to make this more robust
-            const items = document.querySelectorAll('.workshop-item');
-            workshops.forEach((workshop, index) => {
-                if (workshop.id === workshopId && items[index]) {
-                    items[index].classList.add('active');
-                }
-            });
-        }
-
-        function setupEventListeners() {
-            // Category filter
-            document.getElementById('categoryFilter').addEventListener('change', (e) => {
-                const category = e.target.value;
-                populateWorkshopList(category);
-                
-                // Also filter markers on map
-                markers.forEach((marker, index) => {
-                    const workshop = workshops[index];
-                    if (category === 'all' || workshop.category === category) {
-                        marker.setMap(map);
-                    } else {
-                        marker.setMap(null);
-                    }
-                });
-            });
-
-            // Location search
-            const locationInput = document.getElementById('locationSearch');
-            const autocomplete = new google.maps.places.Autocomplete(locationInput);
+            // Add some styling
+            div.style.backgroundColor = 'white';
+            div.style.padding = '10px';
+            div.style.borderRadius = '5px';
+            div.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
             
-            autocomplete.addListener('place_changed', () => {
-                const place = autocomplete.getPlace();
-                if (place.geometry) {
-                    map.setCenter(place.geometry.location);
-                    map.setZoom(14);
-                }
-            });
-
-            // Use current location
-            document.getElementById('useLocation').addEventListener('click', () => {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        (position) => {
-                            const pos = {
-                                lat: position.coords.latitude,
-                                lng: position.coords.longitude
-                            };
-                            map.setCenter(pos);
-                            map.setZoom(14);
-                            
-                            new google.maps.Marker({
-                                position: pos,
-                                map: map,
-                                title: 'Your Location',
-                                icon: {
-                                    url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-                                }
-                            });
-                        },
-                        () => {
-                            alert('Unable to get your location. Please check location permissions.');
-                        }
-                    );
-                } else {
-                    alert('Geolocation is not supported by this browser.');
-                }
-            });
-        }
-
-        // Global functions for info window buttons
-        function joinWorkshop(workshopId) {
-            const workshop = workshops.find(w => w.id === workshopId);
-            alert(`Joining workshop: ${workshop.name}\nRedirecting to booking page...`);
-            // Here you would redirect to actual booking page
-            window.location.href = `booking.html?workshop=${workshopId}`;
-        }
-
-        function shareWorkshop(workshopId) {
-            const workshop = workshops.find(w => w.id === workshopId);
-            if (navigator.share) {
-                navigator.share({
-                    title: workshop.name,
-                    text: workshop.description,
-                    url: window.location.href
-                });
-            } else {
-                // Fallback
-                prompt('Share this workshop link:', window.location.href);
-            }
-        }
-
-        // Fallback if Google Maps fails to load
-        window.gm_authFailure = function() {
-            alert('Google Maps failed to load. Please check your API key.');
+            return div;
         };
+
+        legend.addTo(map);
+
+        // Optional: Fit map bounds to show all markers
+        const group = new L.featureGroup(workshopLocations.map(w => L.marker(w.latlng)));
+        map.fitBounds(group.getBounds().pad(0.1));
+
+        // Add click event to show coordinates (useful for adding new locations)
+        map.on('click', function(e) {
+            console.log('Clicked at: ' + e.latlng.lat + ', ' + e.latlng.lng);
+        });
+
     </script>
 </body>
 </html>

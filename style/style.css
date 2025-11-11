@@ -1,16 +1,552 @@
-<!-- Update the header section in index.html>
-<header>
-    <div class="container nav-container">
-        <a href="#" class="logo">CouplesCraft</a>
-        <nav class="nav-links">
-            <a href="#why">Our Story</a>
-            <a href="#workshops">Workshops</a>
-            <a href="#blog">Blog</a>
-        </nav>
-    </div>
-</header>
+/* Import Slack-inspired fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Slackey&display=swap');
 
-<!-- Update main content wrapper -->
-<main>
-    <!-- All your sections here -->
-</main>
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Slack-inspired professional color scheme */
+    --slack-purple: #4A154B;
+    --slack-dark-purple: #3A0D3A;
+    --slack-blue: #36C5F0;
+    --slack-green: #2EB67D;
+    --slack-yellow: #ECB22E;
+    --slack-red: #E01E5A;
+    
+    /* Neutral colors */
+    --slack-white: #FFFFFF;
+    --slack-gray-1: #F8F8F8;
+    --slack-gray-2: #E8E8E8;
+    --slack-gray-3: #D1D1D1;
+    --slack-gray-4: #616061;
+    --slack-gray-5: #1D1C1D;
+    
+    /* Semantic colors */
+    --primary: var(--slack-purple);
+    --primary-dark: var(--slack-dark-purple);
+    --accent: var(--slack-blue);
+    --success: var(--slack-green);
+    --warning: var(--slack-yellow);
+    --error: var(--slack-red);
+    
+    /* Text colors */
+    --text-primary: var(--slack-gray-5);
+    --text-secondary: var(--slack-gray-4);
+    --text-tertiary: var(--slack-gray-3);
+    
+    /* Background colors */
+    --bg-primary: var(--slack-white);
+    --bg-secondary: var(--slack-gray-1);
+    --bg-tertiary: var(--slack-gray-2);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Slack-style typography */
+.slack-heading {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.slack-body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.slack-caption {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Styles - Slack-inspired */
+header {
+    background: var(--primary);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.logo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--slack-white);
+    text-decoration: none;
+    letter-spacing: -0.025em;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--slack-white);
+    font-weight: 500;
+    font-size: 0.95rem;
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+}
+
+.nav-links a:hover {
+    opacity: 1;
+}
+
+/* Hero Section - Slack-style */
+.hero {
+    padding: 120px 0 80px;
+    text-align: center;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--slack-white);
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 3rem;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+/* Newsletter Form - Slack-style */
+.newsletter-form {
+    background: var(--bg-primary);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 480px;
+    margin: 0 auto;
+    color: var(--text-primary);
+    border: 1px solid var(--slack-gray-2);
+}
+
+.newsletter-form h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.newsletter-form p {
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--slack-gray-2);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+    background: var(--bg-primary);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(54, 197, 240, 0.1);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--primary);
+    color: var(--slack-white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.submit-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.success-message {
+    display: none;
+    background: var(--success);
+    color: var(--slack-white);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Why Section */
+.why-section {
+    padding: 80px 0;
+    background: var(--bg-secondary);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--text-primary);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+}
+
+.why-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.why-text {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+}
+
+.why-text p {
+    margin-bottom: 1.5rem;
+}
+
+.why-text strong {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.why-image .image-placeholder {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: var(--slack-white);
+    font-size: 3rem;
+    padding: 3rem 2rem;
+    border-radius: 16px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+}
+
+/* Workshops Section */
+.workshops {
+    padding: 80px 0;
+    background: var(--bg-primary);
+}
+
+.workshop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.workshop-card {
+    background: var(--bg-primary);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--slack-gray-2);
+    transition: all 0.2s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.workshop-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent);
+}
+
+.workshop-number {
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background: var(--primary);
+    color: var(--slack-white);
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.workshop-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.workshop-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Blog CTA */
+.blog-cta {
+    padding: 80px 0;
+    background: var(--primary);
+    color: var(--slack-white);
+    text-align: center;
+}
+
+.blog-cta h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.blog-cta p {
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.blog-button {
+    display: inline-block;
+    background: var(--slack-white);
+    color: var(--primary);
+    padding: 14px 28px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.blog-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Footer Navigation - Slack mobile style */
+footer {
+    background: var(--bg-primary);
+    border-top: 1px solid var(--slack-gray-2);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.footer-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 500px;
+    margin: 0 auto;
+    background: var(--bg-primary);
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.375rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-button.active {
+    color: var(--primary);
+}
+
+.nav-button.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+.nav-button span:first-child {
+    font-size: 1.5rem;
+    transition: transform 0.2s ease;
+}
+
+.nav-button:hover {
+    color: var(--primary);
+}
+
+.nav-button:hover span:first-child {
+    transform: scale(1.1);
+}
+
+.footer-info {
+    text-align: center;
+    padding: 2rem 0;
+    background: var(--bg-secondary);
+    margin-bottom: 60px; /* Account for fixed footer */
+}
+
+.footer-info p:first-child {
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.footer-info p:last-child {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* Slack-style utility classes */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-accent { color: var(--accent); }
+
+.bg-primary { background: var(--primary); }
+.bg-secondary { background: var(--bg-secondary); }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.25rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.125rem;
+    }
+    
+    .nav-links {
+        display: none;
+    }
+    
+    .newsletter-form {
+        padding: 2rem;
+        margin: 0 1rem;
+    }
+    
+    .why-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .why-image .image-placeholder {
+        font-size: 2.5rem;
+        padding: 2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .workshop-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .workshop-card {
+        padding: 1.5rem;
+    }
+    
+    .footer-nav {
+        padding: 0.5rem;
+    }
+    
+    .nav-button {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .newsletter-form h2 {
+        font-size: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+    }
+    
+    .blog-cta h2 {
+        font-size: 2rem;
+    }
+    
+    .why-text {
+        font-size: 1rem;
+    }
+}
+
+/* Add padding to main content to account for fixed header and footer */
+main {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
