@@ -1,0 +1,413 @@
+/* Import handwritten-style font */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Patrick+Hand&display=swap');
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --royal-blue: #4169E1;
+    --white: #FFFFFF;
+    --light-blue: #E6F0FF;
+    --dark-blue: #2A4CB3;
+    --text-dark: #333333;
+    --text-light: #666666;
+}
+
+body {
+    font-family: 'Patrick Hand', cursive;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--white);
+    min-height: 100vh;
+}
+
+/* Handwritten font classes */
+.handwritten {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 700;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Styles */
+header {
+    background: var(--white);
+    box-shadow: 0 2px 10px rgba(65, 105, 225, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.logo {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--royal-blue);
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--royal-blue);
+}
+
+/* Hero Section */
+.hero {
+    padding: 120px 0 80px;
+    text-align: center;
+    background: linear-gradient(135deg, var(--royal-blue) 0%, var(--dark-blue) 100%);
+    color: var(--white);
+}
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 3rem;
+    opacity: 0.9;
+}
+
+/* Newsletter Form */
+.newsletter-form {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+    color: var(--text-dark);
+}
+
+.newsletter-form h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--royal-blue);
+}
+
+.newsletter-form p {
+    margin-bottom: 2rem;
+    color: var(--text-light);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e1e1e1;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: 'Patrick Hand', cursive;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--royal-blue);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--royal-blue);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-family: 'Patrick Hand', cursive;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background: var(--dark-blue);
+}
+
+.success-message {
+    display: none;
+    background: var(--light-blue);
+    color: var(--dark-blue);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+/* Why Section */
+.why-section {
+    padding: 80px 0;
+    background: var(--light-blue);
+}
+
+.section-title {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--royal-blue);
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-bottom: 3rem;
+}
+
+.why-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.why-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+.why-text p {
+    margin-bottom: 1.5rem;
+}
+
+.why-image .image-placeholder {
+    background: var(--royal-blue);
+    color: var(--white);
+    font-size: 4rem;
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+}
+
+/* Workshops Section */
+.workshops {
+    padding: 80px 0;
+    background: var(--white);
+}
+
+.workshop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.workshop-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 2px solid var(--light-blue);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+.workshop-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(65, 105, 225, 0.1);
+}
+
+.workshop-number {
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    background: var(--royal-blue);
+    color: var(--white);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-family: 'Patrick Hand', cursive;
+}
+
+.workshop-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--royal-blue);
+}
+
+.workshop-card p {
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* Blog CTA */
+.blog-cta {
+    padding: 80px 0;
+    background: var(--royal-blue);
+    color: var(--white);
+    text-align: center;
+}
+
+.blog-cta h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.blog-cta p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.blog-button {
+    display: inline-block;
+    background: var(--white);
+    color: var(--royal-blue);
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-family: 'Patrick Hand', cursive;
+    transition: transform 0.3s;
+}
+
+.blog-button:hover {
+    transform: translateY(-2px);
+}
+
+/* Footer Navigation */
+footer {
+    background: var(--white);
+    border-top: 2px solid var(--light-blue);
+}
+
+.footer-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 1rem 0;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Patrick Hand', cursive;
+    color: var(--text-light);
+}
+
+.nav-button.active {
+    color: var(--royal-blue);
+}
+
+.nav-button span:first-child {
+    font-size: 1.5rem;
+}
+
+.nav-button:hover {
+    color: var(--royal-blue);
+    transform: translateY(-2px);
+}
+
+.footer-info {
+    text-align: center;
+    padding: 2rem 0;
+    background: var(--light-blue);
+}
+
+.footer-info .handwritten {
+    font-size: 2rem;
+    color: var(--royal-blue);
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .nav-links {
+        display: none;
+    }
+    
+    .newsletter-form {
+        padding: 2rem;
+        margin: 0 1rem;
+    }
+    
+    .why-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .why-image .image-placeholder {
+        font-size: 3rem;
+        padding: 2rem;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+    }
+    
+    .workshop-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-nav {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .newsletter-form h2 {
+        font-size: 2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .blog-cta h2 {
+        font-size: 2rem;
+    }
+}
