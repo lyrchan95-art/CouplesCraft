@@ -444,25 +444,6 @@ footer {
     transform: scale(1.1);
 }
 
-.footer-info {
-    text-align: center;
-    padding: 2rem 0;
-    background: var(--bg-secondary);
-    margin-bottom: 60px; /* Account for fixed footer */
-}
-
-.footer-info p:first-child {
-    font-size: 1.5rem;
-    color: var(--primary);
-    margin-bottom: 0.5rem;
-    font-weight: 700;
-}
-
-.footer-info p:last-child {
-    color: var(--text-secondary);
-    font-size: 1rem;
-}
-
 /* Slack-style utility classes */
 .text-primary { color: var(--text-primary); }
 .text-secondary { color: var(--text-secondary); }
