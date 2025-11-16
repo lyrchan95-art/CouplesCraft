@@ -495,7 +495,7 @@ footer {
     }
     
     .footer-nav {
-        padding: 0.5rem;
+        padding: 0.2rem;
     }
     
     .nav-button {
@@ -644,10 +644,10 @@ footer {
 }
 
 .styled-button {
-    background-color: #808080; /* Grey background */
+    background-color: #d7d7cf; /* Grey background */
     border: none; /* No border */
     color: white; /* White text */
-    padding: 15px 32px; /* Padding */
+    padding: 10px 44px; /* Padding */
     text-align: center; /* Centered text */
     text-decoration: none; /* No underline */
     display: inline-block; /* Inline block */
@@ -663,6 +663,6 @@ footer {
 }
 /* Add padding to main content to account for fixed header and footer */
 main {
-    padding-top: 80px;
-    padding-bottom: 80px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
