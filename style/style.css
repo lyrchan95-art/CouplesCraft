@@ -105,10 +105,39 @@ header {
     text-decoration: none;
     letter-spacing: -0.025em;
 }
+/* Header Styles - Responsive */
+header {
+    background: var(--primary);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
 
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    position: relative;
+}
+
+.logo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--slack-white);
+    text-decoration: none;
+    letter-spacing: -0.025em;
+    z-index: 1001;
+}
+
+/* Desktop Navigation */
 .nav-links {
     display: flex;
     gap: 2rem;
+    align-items: center;
 }
 
 .nav-links a {
@@ -118,11 +147,150 @@ header {
     font-size: 0.95rem;
     opacity: 0.9;
     transition: opacity 0.2s ease;
+    padding: 0.5rem 0;
 }
 
 .nav-links a:hover {
     opacity: 1;
 }
+
+/* Mobile Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.hamburger span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--slack-white);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Mobile Menu Styles */
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--primary);
+    z-index: 999;
+    padding: 80px 2rem 2rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.mobile-menu.active {
+    transform: translateX(0);
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.mobile-nav-links a {
+    color: var(--slack-white);
+    text-decoration: none;
+    font-size: 1.25rem;
+    font-weight: 500;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: opacity 0.2s ease;
+}
+
+.mobile-nav-links a:hover {
+    opacity: 0.8;
+}
+
+/* Close Button */
+.close-menu {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--slack-white);
+    font-size: 2rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hamburger Animation */
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    .nav-container {
+        padding: 1rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.25rem;
+    }
+
+    .mobile-nav-links a {
+        font-size: 1.1rem;
+    }
+}
+
+/* Prevent body scroll when menu is open */
+body.menu-open {
+    overflow: hidden;
+}
+
+/* Add padding to main content to account for fixed header */
+main {
+    padding-top: 80px;
+}
+
+@media (max-width: 768px) {
+    main {
+        padding-top: 70px;
+    }
+}
+
 
 /* Hero Section - Slack-style */
 .hero {
@@ -665,4 +833,541 @@ footer {
 main {
     padding-top: 20px;
     padding-bottom: 20px;
+}
+
+/* Signup Page Styles */
+.signup-header {
+    padding: 100px 0 40px;
+    background: var(--bg-secondary);
+}
+
+.back-button {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.back-button:hover {
+    color: var(--primary);
+}
+
+/* Workshop Selection Layout */
+.selection-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin: 3rem 0;
+}
+
+.workshops-list h2 {
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.workshop-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.workshop-card {
+    background: var(--bg-primary);
+    border: 2px solid var(--slack-gray-2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.workshop-card.selected {
+    border-color: var(--primary);
+    background: var(--slack-gray-1);
+}
+
+.workshop-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.workshop-icon {
+    font-size: 2rem;
+    background: var(--slack-gray-2);
+    padding: 0.5rem;
+    border-radius: 8px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.workshop-info {
+    flex: 1;
+}
+
+.workshop-info h3 {
+    margin: 0 0 0.25rem 0;
+    color: var(--text-primary);
+}
+
+.workshop-info p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.price {
+    font-weight: 700;
+    color: var(--primary);
+    text-align: right;
+}
+
+.price span {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.card-details {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.card-details span {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.groupon-badge {
+    background: var(--slack-green);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* Membership Points */
+.membership-points {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--slack-blue) 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.points-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.points-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.points-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.points-info ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.points-info li {
+    padding: 0.25rem 0;
+    font-size: 0.9rem;
+}
+
+/* Attendance Counter */
+.attendance-counter {
+    background: var(--bg-primary);
+    border: 1px solid var(--slack-gray-2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.counter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.counter-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.quota {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--slack-gray-2);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--slack-green);
+    transition: width 0.3s ease;
+}
+
+.counter-text {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+/* Signup Form */
+.signup-form-container {
+    position: sticky;
+    top: 100px;
+}
+
+.signup-form {
+    background: var(--bg-primary);
+    border: 1px solid var(--slack-gray-2);
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.signup-form h3 {
+    margin: 0 0 1.5rem 0;
+    color: var(--text-primary);
+}
+
+.form-section {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--slack-gray-2);
+}
+
+.form-section h4 {
+    margin: 0 0 1rem 0;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--slack-gray-2);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+    background: var(--bg-primary);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(54, 197, 240, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.price-breakdown {
+    margin-top: 0.5rem;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-right: 1rem;
+}
+
+.discount-price {
+    color: var(--slack-green);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-right: 1rem;
+}
+
+.total-price {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1rem;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin-top: 0.25rem;
+}
+
+.checkbox-group label {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--primary);
+    color: var(--slack-white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.submit-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+/* Instructions Section */
+.instructions {
+    padding: 60px 0;
+    background: var(--bg-secondary);
+}
+
+.instructions h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--text-primary);
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.step {
+    background: var(--bg-primary);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--slack-gray-2);
+}
+
+.step-number {
+    background: var(--primary);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-weight: bold;
+}
+
+.step h3 {
+    margin: 0 0 1rem 0;
+    color: var(--text-primary);
+}
+
+.step p {
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Success Modal */
+.success-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: var(--bg-primary);
+    padding: 2rem;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+}
+
+.modal-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.modal-content h2 {
+    margin: 0 0 1.5rem 0;
+    color: var(--text-primary);
+}
+
+.success-details {
+    background: var(--slack-gray-1);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.success-details p {
+    margin: 0.5rem 0;
+}
+
+.points-earned {
+    color: var(--slack-green);
+    font-weight: 600;
+}
+
+.next-steps {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.next-steps h4 {
+    margin: 0 0 1rem 0;
+    color: var(--text-primary);
+}
+
+.next-steps ol {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.next-steps li {
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.modal-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal-btn.primary {
+    background: var(--primary);
+    color: white;
+}
+
+.modal-btn.secondary {
+    background: var(--slack-gray-2);
+    color: var(--text-primary);
+}
+
+.modal-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .selection-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .signup-form-container {
+        position: static;
+    }
+    
+    .card-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .workshop-icon {
+        align-self: center;
+    }
+    
+    .price {
+        text-align: center;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .steps {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .signup-header {
+        padding: 80px 0 30px;
+    }
+    
+    .workshop-card {
+        padding: 1rem;
+    }
+    
+    .signup-form {
+        padding: 1.5rem;
+    }
+    
+    .membership-points {
+        padding: 1rem;
+    }
 }

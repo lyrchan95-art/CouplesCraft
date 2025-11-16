@@ -79,3 +79,89 @@ document.querySelectorAll('.workshop-card').forEach(card => {
         document.getElementById('name').focus();
     });
 });
+// Mobile Menu Functionality
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const closeMenu = document.getElementById('closeMenu');
+const body = document.body;
+
+function toggleMenu() {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    body.classList.toggle('menu-open');
+}
+
+function closeMobileMenu() {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('active');
+    body.classList.remove('menu-open');
+}
+
+// Event Listeners
+hamburger.addEventListener('click', toggleMenu);
+closeMenu.addEventListener('click', closeMobileMenu);
+
+// Close menu when clicking on links
+document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
+});
+
+// Close menu when clicking outside
+mobileMenu.addEventListener('click', (e) => {
+    if (e.target === mobileMenu) {
+        closeMobileMenu();
+    }
+});
+
+// Close menu on escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeMobileMenu();
+    }
+});
+
+// Update your existing smooth scrolling to work with mobile menu
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        // Close mobile menu if open
+        if (mobileMenu.classList.contains('active')) {
+            closeMobileMenu();
+        }
+        
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Update footer navigation to work with mobile
+document.querySelectorAll('.nav-button').forEach(button => {
+    button.addEventListener('click', function() {
+        const page = this.getAttribute('data-page');
+        
+        // Close mobile menu if open
+        if (mobileMenu.classList.contains('active')) {
+            closeMobileMenu();
+        }
+        
+        switch(page) {
+            case 'home':
+                window.location.href = 'index.html';
+                break;
+            case 'map':
+                window.location.href = 'map.html';
+                break;
+            case 'offers':
+                window.location.href = 'offers.html';
+                break;
+            case 'workshops':
+                window.location.href = 'workshops.html';
+                break;
+        }
+    });
+});

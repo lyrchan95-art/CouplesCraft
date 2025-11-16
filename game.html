@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Idea Generator | CouplesCraft HK</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Game Specific Styles */
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .ai-robot {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .robot-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .robot-message {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border-bottom-left-radius: 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            position: relative;
+            max-width: 80%;
+            margin-left: 0;
+        }
+
+        .robot-message::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid var(--bg-primary);
+        }
+
+        .user-message {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            border-bottom-right-radius: 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            margin-left: auto;
+            max-width: 80%;
+            position: relative;
+        }
+
+        .user-message::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 20px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid var(--primary);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .option-card {
+            background: var(--bg-primary);
+            border: 2px solid var(--slack-gray-2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .option-card.selected {
+            border-color: var(--primary);
+            background: var(--slack-gray-1);
+        }
+
+        .option-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .game-progress {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--slack-gray-2);
+            transition: background 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background: var(--primary);
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 2rem 0;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .result-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .result-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .result-description {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .workshop-match {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .workshop-match h4 {
+            margin: 0 0 1rem 0;
+            font-size: 1.3rem;
+        }
+
+        .match-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .match-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .match-features li:last-child {
+            border-bottom: none;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .cta-button.primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .typing-indicator {
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+        .typing-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-secondary);
+            margin: 0 2px;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 1rem;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .robot-message,
+            .user-message {
+                max-width: 90%;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .cta-button {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">CouplesCraft HK</a>
+            <nav class="nav-links">
+                <a href="map.html">Workshop Maps</a>
+                <a href="offers.html">Offers</a>
+                <a href="signup.html">Sign Up</a>
+            </nav>
+            
+            <!-- Mobile Hamburger Menu -->
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <!-- Mobile Menu Overlay -->
+            <div class="mobile-menu" id="mobileMenu">
+                <button class="close-menu" id="closeMenu">×</button>
+                <nav class="mobile-nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="map.html">Workshop Maps</a>
+                    <a href="offers.html">Offers</a>
+                    <a href="signup.html">Sign Up</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Find Your Perfect Date Idea</h1>
+            <p class="hero-subtitle">Let our AI matchmaker find the ideal workshop for your next romantic adventure</p>
+        </div>
+    </section>
+
+    <!-- Game Container -->
+    <section class="game-section">
+         <br>
+        <div class="container game-container">
+            <!-- AI Robot -->
+            <div class="ai-robot">
+                <div class="robot-avatar">🤖</div>
+                <h3>DateBot 3000</h3>
+                <p>Your personal dating workshop assistant</p>
+            </div>
+
+            <!-- Chat Container -->
+            <div id="chatContainer">
+                <!-- Messages will be dynamically added here -->
+            </div>
+
+            <!-- Options Container -->
+            <div id="optionsContainer">
+                <!-- Options will be dynamically added here -->
+            </div>
+
+            <!-- Progress Indicator -->
+            <div class="game-progress" id="progressIndicator">
+                <!-- Progress dots will be dynamically added here -->
+            </div>
+
+            <!-- Result Section (Hidden Initially) -->
+            <div id="resultSection" style="display: none;">
+                <!-- Result will be dynamically added here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Navigation -->
+    <footer>
+        <div class="footer-nav">
+            <button class="nav-button" data-page="home">
+                <span>🏠</span>
+                <span>Home</span>
+            </button>
+            <button class="nav-button" data-page="map">
+                <span>🗺️</span>
+                <span>Map</span>
+            </button>
+            <button class="nav-button" data-page="offers">
+                <span>💝</span>
+                <span>Offers</span>
+            </button>
+        </div>
+        <div class="footer-info">
+            <p class="handwritten">CouplesCraft HK</p>
+            <p>Making every date memorable</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Game Data and Logic
+        const gameData = {
+            currentStep: 0,
+            userAnswers: {},
+            questions: [
+                {
+                    question: "Hi there! I'm DateBot 3000 🎯 What's the main vibe you're looking for in your next date?",
+                    options: [
+                        { icon: "🎨", text: "Creative & Hands-on", value: "creative" },
+                        { icon: "🍕", text: "Foodie & Tasty", value: "foodie" },
+                        { icon: "🌿", text: "Relaxing & Nature", value: "relaxing" },
+                        { icon: "💃", text: "Active & Energetic", value: "active" }
+                    ]
+                },
+                {
+                    question: "Great choice! How adventurous are you feeling?",
+                    options: [
+                        { icon: "😌", text: "Keep it cozy & familiar", value: "cozy" },
+                        { icon: "😊", text: "Something new but comfortable", value: "balanced" },
+                        { icon: "🤩", text: "Let's try something completely new!", value: "adventurous" }
+                    ]
+                },
+                {
+                    question: "What's your ideal date duration?",
+                    options: [
+                        { icon: "⏰", text: "Quick & sweet (1-2 hours)", value: "short" },
+                        { icon: "🕒", text: "Leisurely afternoon (2-4 hours)", value: "medium" },
+                        { icon: "🌙", text: "Full evening experience (4+ hours)", value: "long" }
+                    ]
+                },
+                {
+                    question: "Are you celebrating something special?",
+                    options: [
+                        { icon: "🎉", text: "Yes! Special occasion", value: "special" },
+                        { icon: "💖", text: "Just because we deserve it", value: "regular" },
+                        { icon: "🆕", text: "Trying to break the routine", value: "break_routine" }
+                    ]
+                },
+                {
+                    question: "Last question! What's your budget range?",
+                    options: [
+                        { icon: "💰", text: "Budget friendly (<HK$400 pp)", value: "budget" },
+                        { icon: "💎", text: "Moderate (HK$400-800 pp)", value: "moderate" },
+                        { icon: "👑", text: "Premium experience (>HK$800 pp)", value: "premium" }
+                    ]
+                }
+            ],
+            workshops: {
+                creative: {
+                    title: "🎨 Creative Connection Workshop",
+                    description: "Unleash your artistic sides together in a hands-on creative experience",
+                    match: "Perfect for couples who love making things together",
+                    workshop: "Sunset Pottery",
+                    price: "HK$540/person",
+                    features: [
+                        "Hand-building pottery techniques",
+                        "Professional guidance",
+                        "All materials included",
+                        "Take home your creations",
+                        "Romantic studio atmosphere"
+                    ],
+                    link: "signup.html?workshop=pottery"
+                },
+                foodie: {
+                    title: "🍕 Culinary Adventure Date",
+                    description: "Create delicious memories together in a fun cooking experience",
+                    match: "Ideal for food-loving couples who enjoy creating together",
+                    workshop: "Motorino Pizza Party",
+                    price: "HK$432/person",
+                    features: [
+                        "Authentic Neapolitan pizza making",
+                        "Expert chef instruction",
+                        "Wine pairing included",
+                        "Fresh, quality ingredients",
+                        "Fun, social atmosphere"
+                    ],
+                    link: "signup.html?workshop=motorino"
+                },
+                active: {
+                    title: "💃 Energetic Bonding Experience",
+                    description: "Get moving and connect through shared physical activity",
+                    match: "Great for couples who love staying active together",
+                    workshop: "Salsa Dancing & Cocktails",
+                    price: "HK$495/person",
+                    features: [
+                        "Professional dance instruction",
+                        "Cocktail making session",
+                        "Social dance practice",
+                        "Romantic Latin music",
+                        "Beginner-friendly"
+                    ],
+                    link: "signup.html?workshop=cocktail"
+                },
+                relaxing: {
+                    title: "🌿 Serene Connection Retreat",
+                    description: "Find peace and connection in a calming, nature-inspired setting",
+                    match: "Perfect for couples seeking quality time and relaxation",
+                    workshop: "Japanese Tea Ceremony & Calligraphy",
+                    price: "HK$680/person",
+                    features: [
+                        "Traditional tea ceremony",
+                        "Calligraphy lesson",
+                        "Peaceful garden setting",
+                        "Mindfulness practice",
+                        "Cultural immersion"
+                    ],
+                    link: "signup.html?workshop=tea"
+                }
+            }
+        };
+
+        // Initialize Game
+        document.addEventListener('DOMContentLoaded', function() {
+            startGame();
+        });
+
+        function startGame() {
+            gameData.currentStep = 0;
+            gameData.userAnswers = {};
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function showQuestion(step) {
+            const chatContainer = document.getElementById('chatContainer');
+            const optionsContainer = document.getElementById('optionsContainer');
+            const question = gameData.questions[step];
+
+            // Clear previous options but keep chat history
+            optionsContainer.innerHTML = '';
+
+            // Add robot message with typing effect
+            const robotMessage = document.createElement('div');
+            robotMessage.className = 'robot-message fade-in';
+            robotMessage.innerHTML = `
+                ${question.question}
+                <span class="typing-indicator">
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                </span>
+            `;
+            chatContainer.appendChild(robotMessage);
+
+            // Remove typing indicator after delay and show options
+            setTimeout(() => {
+                robotMessage.innerHTML = question.question;
+                
+                // Create options grid
+                const optionsGrid = document.createElement('div');
+                optionsGrid.className = 'options-grid';
+
+                question.options.forEach((option, index) => {
+                    const optionCard = document.createElement('div');
+                    optionCard.className = 'option-card';
+                    optionCard.innerHTML = `
+                        <div class="option-icon">${option.icon}</div>
+                        <div class="option-text">${option.text}</div>
+                    `;
+                    optionCard.addEventListener('click', () => selectOption(step, option.value, option.text));
+                    optionsGrid.appendChild(optionCard);
+                });
+
+                optionsContainer.appendChild(optionsGrid);
+
+                // Scroll to bottom
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 1500);
+        }
+
+        function selectOption(step, value, text) {
+            const optionsContainer = document.getElementById('optionsContainer');
+            const chatContainer = document.getElementById('chatContainer');
+
+            // Store user answer
+            gameData.userAnswers[step] = value;
+
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'user-message fade-in';
+            userMessage.textContent = text;
+            chatContainer.appendChild(userMessage);
+
+            // Clear options
+            optionsContainer.innerHTML = '';
+
+            // Move to next question or show result
+            gameData.currentStep++;
+
+            if (gameData.currentStep < gameData.questions.length) {
+                setTimeout(() => {
+                    showQuestion(gameData.currentStep);
+                    updateProgress();
+                }, 1000);
+            } else {
+                setTimeout(() => {
+                    showResult();
+                }, 1000);
+            }
+
+            // Scroll to bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function updateProgress() {
+            const progressIndicator = document.getElementById('progressIndicator');
+            progressIndicator.innerHTML = '';
+
+            for (let i = 0; i < gameData.questions.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = `progress-dot ${i <= gameData.currentStep ? 'active' : ''}`;
+                progressIndicator.appendChild(dot);
+            }
+        }
+
+        function showResult() {
+            const resultSection = document.getElementById('resultSection');
+            const chatContainer = document.getElementById('chatContainer');
+            const optionsContainer = document.getElementById('optionsContainer');
+            const progressIndicator = document.getElementById('progressIndicator');
+
+            // Hide progress and options
+            optionsContainer.style.display = 'none';
+            progressIndicator.style.display = 'none';
+
+            // Determine best workshop match (simplified logic)
+            const primaryVibe = gameData.userAnswers[0];
+            const recommendedWorkshop = gameData.workshops[primaryVibe] || gameData.workshops.creative;
+
+            // Add robot final message
+            const finalMessage = document.createElement('div');
+            finalMessage.className = 'robot-message fade-in';
+            finalMessage.textContent = "Based on your answers, I've found the perfect workshop for you! 🎉";
+            chatContainer.appendChild(finalMessage);
+
+            // Show result card
+            resultSection.style.display = 'block';
+            resultSection.innerHTML = `
+                <div class="result-card">
+                    <div class="result-icon">✨</div>
+                    <h2 class="result-title">Your Perfect Match!</h2>
+                    <p class="result-description">${recommendedWorkshop.description}</p>
+                    
+                    <div class="workshop-match">
+                        <h4>${recommendedWorkshop.workshop}</h4>
+                        <p><strong>Why it's perfect:</strong> ${recommendedWorkshop.match}</p>
+                        <ul class="match-features">
+                            ${recommendedWorkshop.features.map(feature => `<li>✅ ${feature}</li>`).join('')}
+                        </ul>
+                        <p class="price"><strong>${recommendedWorkshop.price}</strong> (Groupon discount applied)</p>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <a href="${recommendedWorkshop.link}" class="cta-button primary">🎯 Reserve Your Spot</a>
+                        <button onclick="restartGame()" class="cta-button secondary">🔄 Try Another Vibe</button>
+                    </div>
+                </div>
+            `;
+
+            // Scroll to result
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function restartGame() {
+            const chatContainer = document.getElementById('chatContainer');
+            const optionsContainer = document.getElementById('optionsContainer');
+            const resultSection = document.getElementById('resultSection');
+            const progressIndicator = document.getElementById('progressIndicator');
+
+            // Reset UI
+            chatContainer.innerHTML = '';
+            optionsContainer.innerHTML = '';
+            optionsContainer.style.display = 'block';
+            progressIndicator.style.display = 'flex';
+            resultSection.style.display = 'none';
+
+            // Restart game
+            startGame();
+        }
+
+        // Add some fun animations
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

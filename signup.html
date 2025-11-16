@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up for Workshop | CouplesCraft HK</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">CouplesCraft HK</a>
+            <nav class="nav-links">
+                <a href="map.html">Workshop Maps</a>
+                <a href="offers.html">Offers</a>
+            </nav>
+            
+            <!-- Mobile Hamburger Menu -->
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <!-- Mobile Menu Overlay -->
+            <div class="mobile-menu" id="mobileMenu">
+                <button class="close-menu" id="closeMenu">×</button>
+                <nav class="mobile-nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="map.html">Workshop Maps</a>
+                    <a href="offers.html">Offers</a>
+                    <a href="#newsletterForm">Newsletter</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Signup Header -->
+        <section class="signup-header">
+            <div class="container">
+                <a href="offers.html" class="back-button">← Back to All Offers</a>
+                <h1 class="slack-heading">Workshop Sign Up</h1>
+                <p class="subtitle">Reserve your spot for an unforgettable experience</p>
+            </div>
+        </section>
+
+        <!-- Workshop Selection -->
+        <section class="workshop-selection">
+            <div class="container">
+                <div class="selection-layout">
+                    <!-- Available Workshops -->
+                    <div class="workshops-list">
+                        <h2>Available Workshops</h2>
+                        <div class="workshop-cards">
+                            <!-- Motorino Pizza -->
+                            <div class="workshop-card selected" data-workshop="motorino">
+                                <div class="card-header">
+                                    <div class="workshop-icon">🍕</div>
+                                    <div class="workshop-info">
+                                        <h3>Motorino Pizza Party</h3>
+                                        <p>Neapolitan Pizza Making</p>
+                                    </div>
+                                    <div class="price">HK$432<span>/person</span></div>
+                                </div>
+                                <div class="card-details">
+                                    <span>📍 Central</span>
+                                    <span>⏰ 2 hours</span>
+                                    <span>👫 2-12 couples</span>
+                                </div>
+                                <div class="groupon-badge">Groupon - 10% OFF</div>
+                            </div>
+
+                            <!-- Pottery Workshop -->
+                            <div class="workshop-card" data-workshop="pottery">
+                                <div class="card-header">
+                                    <div class="workshop-icon">🎨</div>
+                                    <div class="workshop-info">
+                                        <h3>Sunset Pottery</h3>
+                                        <p>Hand-building & Glazing</p>
+                                    </div>
+                                    <div class="price">HK$540<span>/person</span></div>
+                                </div>
+                                <div class="card-details">
+                                    <span>📍 Sheung Wan</span>
+                                    <span>⏰ 3 hours</span>
+                                    <span>👫 2-8 couples</span>
+                                </div>
+                                <div class="groupon-badge">Groupon - 10% OFF</div>
+                            </div>
+
+                            <!-- Cocktail Making -->
+                            <div class="workshop-card" data-workshop="cocktail">
+                                <div class="card-header">
+                                    <div class="workshop-icon">🍹</div>
+                                    <div class="workshop-info">
+                                        <h3>Mixology Masterclass</h3>
+                                        <p>Craft Cocktail Creation</p>
+                                    </div>
+                                    <div class="price">HK$495<span>/person</span></div>
+                                </div>
+                                <div class="card-details">
+                                    <span>📍 Wan Chai</span>
+                                    <span>⏰ 2.5 hours</span>
+                                    <span>👫 2-10 couples</span>
+                                </div>
+                                <div class="groupon-badge">Groupon - 10% OFF</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Signup Form -->
+                    <div class="signup-form-container">
+                        <!-- Membership Points -->
+                        <div class="membership-points">
+                            <div class="points-header">
+                                <h3>🎯 Earn Membership Points</h3>
+                                <span class="points-badge" id="pointsEarned">+50 points</span>
+                            </div>
+                            <div class="points-info">
+                                <p>Sign up with friends to earn more points!</p>
+                                <ul>
+                                    <li>1 couple = 50 points</li>
+                                    <li>2 couples = 120 points</li>
+                                    <li>3+ couples = 200 points</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Attendance Counter -->
+                        <div class="attendance-counter">
+                            <div class="counter-header">
+                                <h3>Current Signups</h3>
+                                <span class="quota" id="maxQuota">Max: 12 people</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <div class="counter-text" id="counterText">5 out of 12 spots filled</div>
+                        </div>
+
+                        <!-- Dynamic Signup Form -->
+                        <form class="signup-form" id="signupForm">
+                            <h3 id="formTitle">Motorino Pizza Party</h3>
+                            
+                            <!-- Date Selection -->
+                            <div class="form-group">
+                                <label for="workshopDate">Select Date *</label>
+                                <select id="workshopDate" name="workshopDate" required>
+                                    <option value="">Choose a date</option>
+                                    <!-- Dates will be populated dynamically -->
+                                </select>
+                            </div>
+
+                            <!-- Number of Couples -->
+                            <div class="form-group">
+                                <label for="coupleCount">Number of Couples *</label>
+                                <select id="coupleCount" name="coupleCount" required>
+                                    <option value="">Select number</option>
+                                    <option value="1">1 couple (2 people)</option>
+                                    <option value="2">2 couples (4 people)</option>
+                                    <option value="3">3 couples (6 people)</option>
+                                    <option value="4">4 couples (8 people)</option>
+                                    <option value="5">5 couples (10 people)</option>
+                                    <option value="6">6 couples (12 people)</option>
+                                </select>
+                                <div class="price-breakdown">
+                                    <span class="original-price" id="originalPrice">HK$480 per person</span>
+                                    <span class="discount-price" id="discountPrice">HK$432 per person (10% off)</span>
+                                    <span class="total-price" id="totalPrice">Total: HK$864</span>
+                                </div>
+                            </div>
+
+                            <!-- Contact Information -->
+                            <div class="form-section">
+                                <h4>Your Information</h4>
+                                <div class="form-group">
+                                    <label for="fullName">Full Name *</label>
+                                    <input type="text" id="fullName" name="fullName" required placeholder="Your full name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Email Address *</label>
+                                    <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="phone">Phone Number *</label>
+                                    <input type="tel" id="phone" name="phone" required placeholder="Your phone number">
+                                </div>
+                            </div>
+
+                            <!-- Partner Information -->
+                            <div class="form-section">
+                                <h4>Partner's Information</h4>
+                                <div class="form-group">
+                                    <label for="partnerName">Partner's Name *</label>
+                                    <input type="text" id="partnerName" name="partnerName" required placeholder="Your partner's name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="partnerEmail">Partner's Email</label>
+                                    <input type="email" id="partnerEmail" name="partnerEmail" placeholder="partner.email@example.com">
+                                </div>
+                            </div>
+
+                            <!-- Special Requirements -->
+                            <div class="form-group">
+                                <label for="requirements">Special Requirements</label>
+                                <textarea id="requirements" name="requirements" placeholder="Dietary restrictions, allergies, or special requests..."></textarea>
+                            </div>
+
+                            <!-- Terms Agreement -->
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="terms" name="terms" required>
+                                <label for="terms">I agree to the <a href="#">terms and conditions</a> and understand the cancellation policy</label>
+                            </div>
+
+                            <button type="submit" class="submit-btn">Complete Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Instructions Section -->
+        <section class="instructions">
+            <div class="container">
+                <h2>What Happens Next?</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Immediate Confirmation</h3>
+                        <p>You'll receive an email confirmation within 5 minutes with your booking details</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Payment Processing</h3>
+                        <p>We'll send a secure payment link to complete your reservation within 24 hours</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Workshop Preparation</h3>
+                        <p>Receive reminder emails 3 days and 1 day before your workshop with all the details</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Earn Points & Rewards</h3>
+                        <p>Collect membership points for every signup - redeem for exclusive workshops and perks!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Navigation -->
+    <footer>
+        <div class="footer-nav">
+            <button class="nav-button" data-page="home">
+                <span>🏠</span>
+                <span>Home</span>
+            </button>
+            <button class="nav-button" data-page="map">
+                <span>🗺️</span>
+                <span>Map</span>
+            </button>
+            <button class="nav-button" data-page="offers">
+                <span>💝</span>
+                <span>Offers</span>
+            </button>
+        </div>
+        <div class="footer-info">
+            <p class="handwritten">CouplesCraft HK</p>
+            <p>Creating unforgettable moments together</p>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon">🎉</div>
+            <h2>You're Signed Up!</h2>
+            <div class="success-details">
+                <p><strong id="successWorkshop">Motorino Pizza Party</strong></p>
+                <p id="successDate"></p>
+                <p id="successAttendees"></p>
+                <p class="points-earned" id="successPoints"></p>
+            </div>
+            
+            <div class="next-steps">
+                <h4>Next Steps:</h4>
+                <ol>
+                    <li>Check your email for confirmation</li>
+                    <li>Complete payment within 24 hours</li>
+                    <li>Share with friends to earn bonus points!</li>
+                    <li>Look out for workshop reminders</li>
+                </ol>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-btn primary" onclick="closeSuccessModal()">Got It!</button>
+                <button class="modal-btn secondary" onclick="shareWorkshop()">Share with Friends</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Signup page specific functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSignupPage();
+        });
+
+        function initializeSignupPage() {
+            // Workshop data
+            const workshops = {
+                motorino: {
+                    name: "Motorino Pizza Party",
+                    basePrice: 480,
+                    dates: [
+                        "2024-03-15|Saturday, March 15 - 2:00 PM",
+                        "2024-03-22|Saturday, March 22 - 2:00 PM", 
+                        "2024-03-29|Saturday, March 29 - 2:00 PM",
+                        "2024-04-05|Saturday, April 5 - 2:00 PM"
+                    ],
+                    maxQuota: 12,
+                    currentSignups: 5
+                },
+                pottery: {
+                    name: "Sunset Pottery", 
+                    basePrice: 600,
+                    dates: [
+                        "2024-03-16|Sunday, March 16 - 3:00 PM",
+                        "2024-03-23|Sunday, March 23 - 3:00 PM",
+                        "2024-03-30|Sunday, March 30 - 3:00 PM"
+                    ],
+                    maxQuota: 8,
+                    currentSignups: 3
+                },
+                cocktail: {
+                    name: "Mixology Masterclass",
+                    basePrice: 550,
+                    dates: [
+                        "2024-03-14|Friday, March 14 - 7:00 PM",
+                        "2024-03-21|Friday, March 21 - 7:00 PM",
+                        "2024-03-28|Friday, March 28 - 7:00 PM"
+                    ],
+                    maxQuota: 10,
+                    currentSignups: 4
+                }
+            };
+
+            // Workshop selection
+            document.querySelectorAll('.workshop-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove selected class from all cards
+                    document.querySelectorAll('.workshop-card').forEach(c => {
+                        c.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked card
+                    this.classList.add('selected');
+                    
+                    const workshopId = this.dataset.workshop;
+                    updateSignupForm(workshops[workshopId]);
+                });
+            });
+
+            // Update price when couple count changes
+            document.getElementById('coupleCount').addEventListener('change', updatePricing);
+
+            // Initialize with first workshop
+            updateSignupForm(workshops.motorino);
+        }
+
+        function updateSignupForm(workshop) {
+            // Update form title
+            document.getElementById('formTitle').textContent = workshop.name;
+            
+            // Update dates dropdown
+            const dateSelect = document.getElementById('workshopDate');
+            dateSelect.innerHTML = '<option value="">Choose a date</option>';
+            
+            workshop.dates.forEach(date => {
+                const [value, text] = date.split('|');
+                const option = document.createElement('option');
+                option.value = value;
+                option.textContent = text;
+                dateSelect.appendChild(option);
+            });
+
+            // Update pricing
+            document.getElementById('originalPrice').textContent = `HK$${workshop.basePrice} per person`;
+            const discountPrice = Math.floor(workshop.basePrice * 0.9);
+            document.getElementById('discountPrice').textContent = `HK$${discountPrice} per person (10% off)`;
+            
+            // Update attendance counter
+            document.getElementById('maxQuota').textContent = `Max: ${workshop.maxQuota} people`;
+            document.getElementById('counterText').textContent = 
+                `${workshop.currentSignups} out of ${workshop.maxQuota} spots filled`;
+            
+            const progressPercent = (workshop.currentSignups / workshop.maxQuota) * 100;
+            document.getElementById('progressFill').style.width = `${progressPercent}%`;
+
+            // Update points calculation
+            updatePointsEarned(1); // Default to 1 couple
+        }
+
+        function updatePricing() {
+            const coupleCount = parseInt(document.getElementById('coupleCount').value) || 0;
+            const basePrice = 480; // Default to motorino price
+            const discountPrice = Math.floor(basePrice * 0.9);
+            const totalPrice = discountPrice * 2 * coupleCount; // 2 people per couple
+            
+            if (coupleCount > 0) {
+                document.getElementById('totalPrice').textContent = `Total: HK$${totalPrice}`;
+                document.getElementById('totalPrice').style.display = 'block';
+                updatePointsEarned(coupleCount);
+            } else {
+                document.getElementById('totalPrice').style.display = 'none';
+            }
+        }
+
+        function updatePointsEarned(coupleCount) {
+            let points = 0;
+            if (coupleCount === 1) points = 50;
+            else if (coupleCount === 2) points = 120;
+            else if (coupleCount >= 3) points = 200;
+            
+            document.getElementById('pointsEarned').textContent = `+${points} points`;
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+
+        function shareWorkshop() {
+            const workshopName = document.getElementById('successWorkshop').textContent;
+            alert(`Share "${workshopName}" with friends to earn bonus points! 🎯`);
+            // In a real app, this would open native sharing dialog
+        }
+    </script>
+</body>
+</html>

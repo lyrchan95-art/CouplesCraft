@@ -15,17 +15,36 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <div class="container nav-container">
-            <a href="#" class="logo">CouplesCraft HK</a>
-            <nav class="nav-links">
-                <a href="#why">Our Story</a>
-                <a href="#workshops">Workshops</a>
-                <a href="#blog">Blog</a>
+<header>
+    <div class="container nav-container">
+        <a href="#" class="logo">CouplesCraft HK</a>
+        
+        <!-- Desktop Navigation -->
+        <nav class="nav-links">
+            <a href="map.html">Workshop Maps</a>
+            <a href="offers.html">Offers</a>
+        </nav>
+        
+        <!-- Mobile Hamburger Menu -->
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu" id="mobileMenu">
+            <button class="close-menu" id="closeMenu">×</button>
+            <nav class="mobile-nav-links">
+                <a href="index.html">Home</a>
+                <a href="map.html">Workshop Maps</a>
+                <a href="offers.html">Offers</a>
+                <a href="signup.html">Workshops List</a>
+                <a href="game.html">AI Dating Ideat</a>
             </nav>
         </div>
-    </header>
-
+    </div>
+</header>
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
@@ -148,6 +167,52 @@
                     <h3>手作陶瓷</h3>
                     <p>在陶瓷工作坊中，親手製作專屬的陶器，感受創作的樂趣，讓愛情的印記留在每一件作品上。</p>      
               </div> </section>
+
+
+    <section class="quick-nav">
+    <div class="container">
+        <h2 class="slack-heading">Start Exploring</h2>
+        <div class="nav-cards">
+            <a href="maps.html" class="nav-card">
+                <div class="nav-icon">🗺️</div> 
+                <h4>Find Nearby Workshops</h4>
+                Browse by location across Hong Kong
+            </a>
+            <a href="offers.html" class="nav-card">
+                <div class="nav-icon">💝</div>
+                <h4>Special Offers</h4>
+                Limited-time deals and experiences
+            </a>
+            <a href="workshops.html" class="nav-card">
+                <div class="nav-icon">🎨</div>
+                <h4>All Workshops</h4>
+                Browse by category and date
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Workshop Preview -->
+<section class="featured-workshop">
+    <div class="container">
+        <h2 class="slack-heading">Featured Experience</h2>
+        <div class="featured-card">
+            <div class="featured-image">
+                <!-- Motorino Pizza Party image -->
+            </div>
+            <div class="featured-content">
+                <h3>Motorino Pizza Making Party</h3>
+                <p>Create authentic Neapolitan pizza together in this hands-on workshop</p>
+                <div class="featured-details">
+                    <span>📍 Central</span>
+                    <span>⏰ 2 hours</span>
+                    <span>👫 2-12 people</span>
+                </div>
+                <a href="offers.html" class="featured-button">View Offer</a>
+            </div>
+        </div>
+    </div>
+</section>
 
    <!-- Maps CTA Section -->
                 <div> <h2 class="slack-heading">Explore Our Maps</h2>
