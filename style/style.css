@@ -642,6 +642,25 @@ footer {
     .word-14 { font-size: 1rem; }
     .word-15 { font-size: 0.8rem; }
 }
+
+.styled-button {
+    background-color: #808080; /* Grey background */
+    border: none; /* No border */
+    color: white; /* White text */
+    padding: 15px 32px; /* Padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Inline block */
+    font-size: 16px; /* Font size */
+    margin: 4px 2px; /* Margins */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 12px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.styled-button:hover {
+    background-color: #696969; /* Darker grey on hover */
+}
 /* Add padding to main content to account for fixed header and footer */
 main {
     padding-top: 80px;
